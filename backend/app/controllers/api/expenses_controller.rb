@@ -1,6 +1,6 @@
 class Api::ExpensesController < ApplicationController
   def index
-    expenses = Expense.includes(:category).order(created_at: :desc)
+    expenses = Expense.includes(:category).order(date: :desc)
 
     if params[:year].present? && params[:month].present?
       year = params[:year].to_i
@@ -18,7 +18,7 @@ class Api::ExpensesController < ApplicationController
   def create
     expense = Expense.new(expense_params)
     expense.payer_name ||= "Unknown"  # Add this line
-    
+
     if expense.save
       render json: format_expense(expense), status: :created
     else
