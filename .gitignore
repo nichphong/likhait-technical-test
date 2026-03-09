@@ -62,6 +62,7 @@ yarn-error.log*
 
 # Testing
 /backend/coverage/
+/backend/vendor/bundle/ruby/
 
 # RSpec
 /backend/.rspec_status

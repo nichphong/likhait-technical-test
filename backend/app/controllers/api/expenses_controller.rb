@@ -17,7 +17,8 @@ class Api::ExpensesController < ApplicationController
 
   def create
     expense = Expense.new(expense_params)
-
+    expense.payer_name ||= "Unknown"  # Add this line
+    
     if expense.save
       render json: format_expense(expense), status: :created
     else
