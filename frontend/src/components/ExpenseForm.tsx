@@ -1,3 +1,4 @@
+const getTodayString = () => new Date().toISOString().split("T")[0];
 /**
  * Form component for adding/editing expenses
  */
@@ -24,10 +25,13 @@ export function ExpenseForm({
   categories = [...EXPENSE_CATEGORIES],
 }: ExpenseFormProps) {
   const { formData, errors, isSubmitting, handleChange, handleSubmit } =
-    useExpenseForm({
-      initialData,
-      onSubmit,
-    });
+  useExpenseForm({
+    initialData: {
+      date: getTodayString(), // default to today
+      ...initialData,         // allow override for edit mode
+    },
+    onSubmit,
+  });
 
   const formStyle: React.CSSProperties = {
     display: "flex",
@@ -84,6 +88,7 @@ export function ExpenseForm({
         value={formData.date}
         onChange={(e) => handleChange("date", e.target.value)}
         error={errors.date}
+        max={getTodayString()}
         fullWidth
         required
       />
